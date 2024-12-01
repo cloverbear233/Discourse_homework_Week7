@@ -1,0 +1,5 @@
+plot(y=Y,x=X[,2],xlab="X",ylab="Y",main="regression")
+abline(a=bhat[1],b=bhat[2])
+abline(a=b0[1],b=b0[2],col="red")
+abline(h=0,lty=2)
+abline(v=0,lty=2)
