@@ -1,0 +1,583 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\documentclass[
+]{article}
+\usepackage{xcolor}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\newenvironment{Shaded}{}{}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{#1}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\BuiltInTok}[1]{\textcolor[rgb]{0.00,0.50,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{#1}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{#1}}
+\newcommand{\ImportTok}[1]{\textcolor[rgb]{0.00,0.50,0.00}{\textbf{#1}}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{#1}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\author{}
+\date{}
+
+\begin{document}
+
+\subsection{0、特征工程}\label{0ux7279ux5f81ux5de5ux7a0b}
+
+\subsubsection{1、数据预处理}\label{1ux6570ux636eux9884ux5904ux7406}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  连续值处理
+
+  \subparagraph{（1）
+  连续值：可以选择该特征值的所有样本的均值或中位数来填充缺失值}\label{1-ux8fdeux7eedux503cux53efux4ee5ux9009ux62e9ux8be5ux7279ux5f81ux503cux7684ux6240ux6709ux6837ux672cux7684ux5747ux503cux6216ux4e2dux4f4dux6570ux6765ux586bux5145ux7f3aux5931ux503c}
+
+  \subparagraph{（2）
+  离散值：选择该特征值的所有样本中最频繁出现的类别值来填充缺失值}\label{2-ux79bbux6563ux503cux9009ux62e9ux8be5ux7279ux5f81ux503cux7684ux6240ux6709ux6837ux672cux4e2dux6700ux9891ux7e41ux51faux73b0ux7684ux7c7bux522bux503cux6765ux586bux5145ux7f3aux5931ux503c}
+
+  注：不可信的样本丢掉，缺省值极多的字段考虑不用（即删掉）
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ sklearn.processing }\ImportTok{import}\NormalTok{ Imputer}
+\ImportTok{from}\NormalTok{ numpy }\ImportTok{import}\NormalTok{ vstack, array, nan}
+\CommentTok{\#缺失值计算，返回值为计算缺失值后的数据}
+\CommentTok{\#参数missing\_value为缺失值的表示形式，默认为NaN}
+\CommentTok{\#参数strategy为缺失值填充方式，默认为mean（均值）}
+\NormalTok{Imputer().fit\_transform(vstack((array([nan, nan, nan, nan]), iris.data)))}
+\end{Highlighting}
+\end{Shaded}
+\item
+  离散特征的连续化处理
+
+  \textbf{（1）独热编码（one-hot
+  encoding）（哑变量）}\texttt{多种方法见项目}\\
+  处理方法比较简单，比如某特征的取值是高，中和低，那么我们就可以创建三个取值为0或者1的特征，将高编码为1,0,0，中编码为0,1,0，低编码为0,0,1。也就是说，之前的一个特征被我们转化为了三个特征。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ sklearn.preprocessing }\ImportTok{import}\NormalTok{ LabelEncoder}
+\ImportTok{from}\NormalTok{ sklearn.preprocessing }\ImportTok{import}\NormalTok{ OneHotEncoder}
+\CommentTok{\#哑编码，对IRIS数据集的目标值，返回值为哑编码后的数据}
+\NormalTok{OneHotEncoder().fit\_transform(iris.target.reshape((}\OperatorTok{{-}}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{)))}
+\end{Highlighting}
+\end{Shaded}
+
+  \textbf{（2）特征嵌入（embedding）}
+\end{enumerate}
+
+这个一般用于深度学习中。比如对于用户的ID这个特征，如果要使用独热编码，则维度会爆炸，如果使用特征嵌入维度就低很多了。对于每个要嵌入的特征，我们会有一个特征嵌入矩阵，这个矩阵的行很大，对应我们该特征的数目。比如用户ID，如果有100万个，那么嵌入的特征矩阵的行就是100万。但是列一般比较小，比如可以取20。这样每个用户ID就转化为了一个20维的特征向量，进而参与深度学习模型。
+
+在\textbf{tensorflow}中，我们可以先随机初始化一个特征嵌入矩阵，对于每个用户，可以用\textbf{tf.nn.embedding\_lookup}找到该用户的特征嵌入向量。特征嵌入矩阵会在反向传播的迭代中优化。
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  连续特征的离散化处理
+
+  连续特征的离散化就是\textbf{\texttt{在数据的取值范围内设定若干个离散的划分点}}，将取值范围划分为一些离散化的区间，最后用不同的符号或整数值代表落在每个子区间中的数据值。
+
+  首先要确定分类数，然后将连续特征值映射到这些分类值（等宽法、等频法、一维聚类）。
+
+  （1）根据阈值进行分组\\
+  比如我们根据连续值特征的分位数，将该特征分为高，中和低三个特征。将分位数从0\textasciitilde0.3的设置为低，0.3\textasciitilde0.7的设置为中，0.7\textasciitilde1的设置为高。
+
+  （2）基于聚类分析的方法\\
+  一维聚类的方法包括两个步骤，首先将连续特征的值用\textbf{聚类算法（如K-Means算法）}进行聚类，然后再将聚类得到的簇进行处理，合并到一个簇的连续特征值并做同一标记。聚类分析的离散化方法也需要用户指定簇的个数，从而决定产生的区间数。
+
+  （3）使用梯度提升树（GDBT）将连续值转化为离散值
+
+  在sklearn中，我们可以用GradientBoostingClassifier的
+  apply方法很方便的得到样本离散化后的特征，然后使用独热编码即可
+
+  \begin{enumerate}
+  \def\labelenumii{\arabic{enumii}.}
+  \item
+    特征的标准化和归一化（数值型数据）
+
+    （1）Z-score------0-均值标准化
+
+    \[\frac{x-\mu}{\sigma}\]
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ sklearn.preprocessing }\ImportTok{import}\NormalTok{ StandaedScaler}
+\NormalTok{StandardScaler().fit\_transform(iris.data)}
+\end{Highlighting}
+\end{Shaded}
+
+    （2）最小-最大标准化（min-max）
+
+    最小 -
+    最大标准化也成为离差标准化，是对原始数据的线性变换，将数值映射到{[}0,1{]}之间。
+
+    具体的方法是求出样本特征x的最大值max和最小值min，然后用(x-min)/(max-min)来代替原特征。如果我们希望将数据映射到任意一个区间{[}a,b{]}，而不是{[}0,1{]}，那么也很简单。用(x-min)(b-a)/(max-min)+a来代替原特征即可。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ sklearn.preprocessing }\ImportTok{import}\NormalTok{ MinMaxScaler}
+\NormalTok{MinMaxScaler().fit\_transform(iris.data)}
+\end{Highlighting}
+\end{Shaded}
+
+    （3）L1/L2范数标准化
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ sklearn.preprocessing }\ImportTok{import}\NormalTok{ Normalizer}
+\NormalTok{Normalizer().fit\_transform(iris.data)}
+\end{Highlighting}
+\end{Shaded}
+
+    \pandocbounded{\includegraphics[keepaspectratio]{https://i-blog.csdnimg.cn/blog_migrate/5dde120743dc7b57c7f71f87f5e6b2fe.png\#pic_center}}
+
+    （4）对定量特征二值化（阈值决定是1还是0）
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ sklearn.preprocessing }\ImportTok{import}\NormalTok{ Binarizer}
+\CommentTok{\#二值化，阈值设置为3，返回值为二值化后的数据}
+\NormalTok{Binarizer(threshold}\OperatorTok{=}\DecValTok{3}\NormalTok{).fit\_transform(iris.data)}
+\end{Highlighting}
+\end{Shaded}
+  \end{enumerate}
+\end{enumerate}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  时间类型的数据处理
+
+  （1）连续的时间差值法\\
+  即计算出所有样本的时间到某一个未来时间之间的数值差距，这样这个差距是UTC的时间差，从而将时间特征转化为连续值。
+
+  （2）将一个时间转化为离散特征\\
+  根据时间所在的年，月，日，星期几，小时数，将一个时间特征转化为若干个离散特征，这种方法在分析具有明显时间趋势的问题比较好用。
+\end{enumerate}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  文本类型的数据预处理（词袋，n-gram,TF-IDF，word2vec)给大模型弄吧
+\item
+  异常特征样本清洗
+
+  \textbf{目标：清除原始数据中的异常数据}
+
+  （1）偏差检测（ 聚类（KMeans）和最近邻（KNN））\\
+  比如我们可以用KMeans聚类将训练样本分成若干个簇，如果\textbf{某一个簇里的样本数很少，而且簇质心和其他所有的簇都很远}，那么这个簇里面的样本极有可能是异常特征样本了。我们可以将其从训练集过滤掉。
+
+  （2）异常点检测（iForest，one class SVM）\\
+  主要是使用\textbf{iForest或者one class
+  SVM}，使用异常点检测的机器学习算法来过滤所有的异常点。
+
+  （3）基于统计的异常点检测\\
+  例如极差，四分位数间距，均差，标准差等，这种方法适合于挖掘单变量的数值型数据。全距(Range)，又称\textbf{极差}，是用来表示统计资料中的变异量数(measures
+  of variation)
+  ，其最大值与最小值之间的差距；四分位距通常是用来\textbf{构建箱形图}，以及对概率分布的简要图表概述。
+
+  （4）基于距离的异常点检测\\
+  主要通过距离方法来检测异常点，将数据集中与大多数点之间距离大于某个阈值的点视为异常点，主要使用的距离度量方法有\textbf{绝对距离
+  ( 曼哈顿距离 ) 、欧氏距离和马氏距离等方法。}
+
+  （5）基于密度的异常点检测\\
+  考察当前点的周围密度，可以发现局部异常点，例如LOF算法
+\end{enumerate}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  处理不平衡数据
+
+  \url{https://blog.csdn.net/asialee_bird/article/details/83714612}
+\end{enumerate}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  数据变换
+
+  常见的数据变换有基于多项式的、基于指数函数的、基于对数函数的。如4个特征，度为2的多项式转换公式
+
+  \pandocbounded{\includegraphics[keepaspectratio]{https://i-blog.csdnimg.cn/blog_migrate/eb9b8a2e7a7771c84bdffd96fb81a6aa.png}}
+
+  使用preproccessing库的PolynomialFeatures类对数据进行多项式转换的代码如下
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ sklearn.preprocessing }\ImportTok{import}\NormalTok{ PolynomialFeatures}
+
+\CommentTok{\#多项式转换}
+\CommentTok{\#参数degree为度，默认值为2}
+\NormalTok{PolynomialFeatures().fit\_transform(iris.data)}
+\end{Highlighting}
+\end{Shaded}
+
+  基于单变元函数的数据变换可以使用一个统一的方式完成，使用preproccessing库的FunctionTransformer对数据进行对数函数转换的代码如下：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ numpy }\ImportTok{import}\NormalTok{ log1p}
+\ImportTok{from}\NormalTok{ sklearn.preprocessing }\ImportTok{import}\NormalTok{ FunctionTransformer}
+
+\CommentTok{\#自定义转换函数为对数函数的数据变换}
+\CommentTok{\#第一个参数是单变元函数}
+\NormalTok{FunctionTransformer(log1p).fit\_transform(iris.data)}
+\end{Highlighting}
+\end{Shaded}
+
+  \begin{longtable}[]{@{}lll@{}}
+  \toprule\noalign{}
+  类 & 功能 & 说明 \\
+  \midrule\noalign{}
+  \endhead
+  \bottomrule\noalign{}
+  \endlastfoot
+  StandardScaler & 无量纲化 &
+  标准化，基于特征矩阵的列，将特征值转换至服从标准正态分布 \\
+  MinMaxScaler & 无量纲化 &
+  区间缩放，基于最大最小值，将特征值转换到{[}0, 1{]}区间上 \\
+  Normalizer & 归一化 &
+  基于特征矩阵的行，将样本向量转换为``单位向量'' \\
+  Binarizer & 二值化 & 基于给定阈值，将定量特征按阈值划分 \\
+  OneHotEncoder & 哑编码 & 将定性数据编码为定量数据 \\
+  Imputer & 缺失值计算 & 计算缺失值，缺失值可填充为均值等 \\
+  PolynomialFeatures & 多项式数据转换 & 多项式数据转换 \\
+  Function Transformer & 自定义单元数据转换 &
+  使用单变元的函数来转换数据 \\
+  \end{longtable}
+\end{enumerate}
+
+\subsubsection{2、特征选择}\label{2ux7279ux5f81ux9009ux62e9}
+
+当数据预处理完成后，我们需要选择有意义的特征输入机器学习的算法和模型进行训练。通常来说，从两个方面考虑来选择特征：
+
+\begin{itemize}
+\item
+  \textbf{特征是否发散}：如果一个特征不发散，例如方差接近于0，也就是说样本在这个特征上基本上没有差异，这个特征对于样本的区分并没有什么用。
+\item
+  \textbf{特征与目标的相关性}：这点比较显见，与目标相关性高的特征，应当优选选择。除方差法外，本文介绍的其他方法均从相关性考虑。
+\end{itemize}
+
+根据特征选择的形式又可以将特征选择方法分为3种：
+
+\begin{itemize}
+\item
+  Filter：过滤法，按照发散性或者相关性对各个特征进行评分，设定阈值或者待选择阈值的个数，选择特征。
+\item
+  Wrapper：包装法，根据目标函数（通常是预测效果评分），每次选择若干特征，或者排除若干特征。
+\item
+  Embedded：嵌入法，先使用某些机器学习的算法和模型进行训练，得到各个特征的权值系数，根据系数从大到小选择特征。类似于Filter方法，但是是通过训练来确定特征的优劣。
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  过滤法选择特征（filter）
+
+  它按照特征的发散性或者相关性指标对各个特征进行评分，设定评分阈值或者待选择阈值的个数，选择合适的特征。
+
+  （1）方差筛选法
+
+  使用方差选择法，先要计算各个特征的方差，然后\textbf{根据阈值，选择方差大于阈值的特征}。（方差越大的特征，那么我们可以认为它是比较有用的。如果方差较小，比如小于1，那么这个特征可能对我们的算法作用没有那么大。最极端的，如果某个特征方差为0，即所有的样本该特征的取值都是一样的，那么它对我们的模型训练没有任何作用，可以直接舍弃。\textbf{在实际应用中，我们会指定一个方差的阈值，当方差小于这个阈值的特征会被我们筛掉。})
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ sklearn.feature\_selection }\ImportTok{import}\NormalTok{ VarianceThreshold}
+\CommentTok{\#方差选择法，返回值为特征选择后的数据}
+\CommentTok{\#参数threshold为方差的阈值}
+\NormalTok{VarianceThreshold(threshold}\OperatorTok{=}\DecValTok{3}\NormalTok{).fit\_transform(iris.data)}
+\end{Highlighting}
+\end{Shaded}
+
+  （2）相关系数
+
+  这个主要用于输出连续值的监督学习算法中。我们分别计算所有训练集中各个特征与输出值之间的相关系数，设定一个阈值，选择相关系数较大的部分特征。即使用相关系数法，先要计算\textbf{各个特征对目标值的相关系数以及相关系数的P值}。用feature\_selection库的SelectKBest类结合相关系数来选择特征的代码如下：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ sklearn.feature\_selection }\ImportTok{import}\NormalTok{ SelectKBest}
+\ImportTok{from}\NormalTok{ scipy.stats }\ImportTok{import}\NormalTok{ pearsonr }
+\CommentTok{\#选择K个最好的特征，返回选择特征后的数据}
+\CommentTok{\#第一个参数为计算评估特征是否好的函数，该函数输入特征矩阵和目标向量，输出二元组（评分，P值）的数组，数组第i项为第i个特征的评分和P值。在此定义为计算相关系数}
+\CommentTok{\#参数k为选择的特征个数}
+\NormalTok{SelectKBest(}\KeywordTok{lambda}\NormalTok{ X, Y: array(}\BuiltInTok{map}\NormalTok{(}\KeywordTok{lambda}\NormalTok{ x:pearsonr(x, Y), X.T)).T, k}\OperatorTok{=}\DecValTok{2}\NormalTok{).fit\_transform(iris.data, iris.target)}
+\end{Highlighting}
+\end{Shaded}
+\end{enumerate}
+
+（3）假设检验法（卡方检验、F检验、t检验）
+
+卡方检验可以检验某个特征分布和输出值分布之间的相关性。
+
+经典的卡方检验是检验定性自变量对定性因变量的相关性。假设自变量有N种取值，因变量有M种取值，考虑自变量等于i且因变量等于j的样本频数的观察值与期望的差距。
+
+我们还可以使用F检验和t检验，它们都是使用假设检验的方法，只是使用的统计分布不是卡方分布，而是F分布和t分布而已。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ sklearn.feature\_selection }\ImportTok{import}\NormalTok{ SelectKBest}
+\ImportTok{from}\NormalTok{ sklearn.feature\_selection }\ImportTok{import}\NormalTok{ chi2}
+\CommentTok{\#选择K个最好的特征，返回选择特征后的数据}
+\NormalTok{SelectKBest(chi2, k}\OperatorTok{=}\DecValTok{2}\NormalTok{).fit\_transform(iris.data, iris.target)}
+\end{Highlighting}
+\end{Shaded}
+
+（4）互信息
+
+即从信息熵的角度分析各个特征和输出值之间的关系评分。\textbf{在决策树算法中我们讲到过互信息（信息增益）。互信息值越大，说明该特征和输出值之间的相关性越大。}
+
+经典的互信息也是评价定性自变量对定性因变量的相关性。
+
+\url{https://blog.csdn.net/asialee_bird/article/details/81084783}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ sklearn.feature\_selection }\ImportTok{import}\NormalTok{ SelectKBest}
+\ImportTok{from}\NormalTok{ minepy }\ImportTok{import}\NormalTok{ MINE}
+\CommentTok{\#由于MINE的设计不是函数式的，定义mic方法将其为函数式的，返回一个二元组，二元组的第2项设置成固定的P值0.5}
+\KeywordTok{def}\NormalTok{ mic(x, y):}
+\NormalTok{    m }\OperatorTok{=}\NormalTok{ MINE()}
+\NormalTok{    m.compute\_score(x, y)}
+    \ControlFlowTok{return}\NormalTok{ (m.mic(), }\FloatTok{0.5}\NormalTok{)}
+\CommentTok{\#选择K个最好的特征，返回特征选择后的数据}
+\NormalTok{SelectKBest(}\KeywordTok{lambda}\NormalTok{ X, Y: array(}\BuiltInTok{map}\NormalTok{(}\KeywordTok{lambda}\NormalTok{ x:mic(x, Y), X.T)).T, k}\OperatorTok{=}\DecValTok{2}\NormalTok{).fit\_transform(iris.data, iris.target)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  包装法选择特征
+
+  根据目标函数，通常是预测效果评分，每次选择部分特征，或者排除部分特征
+
+  （1）递归消除特征算法
+
+  递归消除特征法使用一个机器学习模型来进行多轮训练，每轮训练后，消除若干权值系数的对应的特征，再基于新的特征集进行下一轮训练
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ sklearn.feature\_selection }\ImportTok{import}\NormalTok{ RFE}
+\ImportTok{from}\NormalTok{ sklearn.linear\_model }\ImportTok{import}\NormalTok{ LogisticRegression}
+\CommentTok{\#递归特征消除法，返回特征选择后的数据}
+\CommentTok{\#参数estimator为基模型}
+\CommentTok{\#参数n\_features\_to\_select为选择的特征个数}
+\NormalTok{RFE(estimator}\OperatorTok{=}\NormalTok{LogisticRegression(), n\_features\_to\_select}\OperatorTok{=}\DecValTok{2}\NormalTok{).fit\_transform(iris.data, iris.target)}
+\end{Highlighting}
+\end{Shaded}
+\end{enumerate}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  嵌入法选择特征（embedded）------\textbf{感觉现在普遍用机器学习训练得到结果}
+
+  先使用某些机器学习的算法和模型进行训练，\textbf{得到各个特征的权值系数，根据权值系数从大到小来选择特征。}（类似于Filter方法，但是是通过训练来确定特征的优劣。）
+
+  （1）基于惩罚项的特征选择法（正则化）
+
+  使用带惩罚项的基模型，除了筛选出特征外，同时也进行了降维。
+
+  \textbf{最常用的是使用L1正则化和L2正则化来选择特征。}正则化惩罚项越大，那么模型的系数就会越小。当正则化惩罚项大到一定的程度的时候，部分特征系数会变成0，当正则化惩罚项继续增大到一定程度时，所有的特征系数都会趋于0.
+  但是我们会发现一部分特征系数会更容易先变成0，这部分系数就是可以筛掉的。也就是说，我们选择特征系数较大的特征。常用的L1正则化和L2正则化来选择特征的基学习器是逻辑回归。（L1惩罚项降维的原理在于保留多个对目标值具有同等相关性的特征中的一个，所以没选到的特征不代表不重要。故，可结合L2惩罚项来优化。具体操作为：若一个特征在L1中的权值为1，选择在L2中权值差别不大且在L1中权值为0的特征构成同类集合，将这一集合中的特征平分L1中的权值，故需要构建一个新的逻辑回归模型）
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ sklearn.feature\_selection }\ImportTok{import}\NormalTok{ SelectFromModel}
+\ImportTok{from}\NormalTok{ sklearn.linear\_model }\ImportTok{import}\NormalTok{ LogisticRegression}
+\CommentTok{\#带L1惩罚项的逻辑回归作为基模型的特征选择}
+\NormalTok{SelectFromModel(LogisticRegression(penalty}\OperatorTok{=}\StringTok{"l1"}\NormalTok{, C}\OperatorTok{=}\FloatTok{0.1}\NormalTok{)).fit\_transform(iris.data, iris.target)}
+\end{Highlighting}
+\end{Shaded}
+
+  （2）基于树模型的特征选择法
+
+  可以使用决策树或者GBDT。一般来说，可以得到特征系数coef或者可以得到特征重要度(feature
+  importances)的算法才可以做为嵌入法的基学习器。
+
+  树模型中GBDT也可用来作为基模型进行特征选择，使用feature\_selection库的SelectFromModel类结合GBDT模型。
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ sklearn.feature\_selection }\ImportTok{import}\NormalTok{ SelectFromModel}
+\ImportTok{from}\NormalTok{ sklearn.ensemble }\ImportTok{import}\NormalTok{ GradientBoostingClassifier}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  寻找高级特征（特征构造）
+
+  在Kaggle之类的算法竞赛中，高分团队主要使用的方法除了集成学习算法，剩下的主要就是在高级特征上面做文章。所以寻找高级特征是模型优化的必要步骤之一。当然，在第一次建立模型的时候，我们可以先不寻找高级特征，\textbf{得到基准模型后，再寻找高级特征进行优化。}（比如有车的路程特征和时间间隔特征，我们就可以得到车的平均速度这个二级特征。根据车的速度特征，我们就可以得到车的加速度这个三级特征等）
+
+  寻找高级特征最常用的方法有：若干项特征加和，若干项特征之差，若干项特征乘积，若干项特征除商。
+
+  寻找高级特征它是根据业务和模型需要而得，而不是随便的两两组合形成高级特征，这样容易导致特征爆炸，反而没有办法得到较好的模型。
+
+  一般而言，聚类的时候高级特征尽量少一点，分类回归的时候高级特征适度的多一点。
+\end{enumerate}
+
+\subsubsection{三、降维}\label{ux4e09ux964dux7ef4}
+
+当特征选择完成后，可以直接训练模型了，但是可能由于特征矩阵过大，导致计算量大，训练时间长的问题，因此降低特征矩阵维度也是必不可少的。\textbf{常见的降维方法除了以上提到的基于L1惩罚项的模型以外，另外还有主成分分析法（PCA）和线性判别分析（LDA），}线性判别分析本身也是一个分类模型。PCA和LDA有很多的相似点，其本质是要将原始的样本映射到维度更低的样本空间中，但是PCA和LDA的映射目标不一样：\textbf{PCA是为了让映射后的样本具有最大的发散性；而LDA是为了让映射后的样本有最好的分类性能。所以说PCA是一种无监督的降维方法，而LDA是一种有监督的降维方法。}
+
+（1）PCA主成分分析法
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ sklearn.decomposition }\ImportTok{import}\NormalTok{ PCA}
+\CommentTok{"""PCA主成分分析"""}
+\KeywordTok{def}\NormalTok{ pca():}
+    \CommentTok{"""}
+\CommentTok{        PCA:}
+\CommentTok{            本质：PCA是一种分析、简化数据集的技术}
+\CommentTok{            目的：是数据维数压缩，尽可能降低原数据的维数（复杂度），损失少量信息。}
+\CommentTok{            作用：可以消减回归分析或聚类分析中特征的数量}
+\CommentTok{        语法:}
+\CommentTok{            PCA(n\_components=None)}
+\CommentTok{                将数据分解为较为低维空间}
+\CommentTok{                PCA.fit=transform(X)}
+\CommentTok{                    X: numpy array 格式的数据[n\_samples,n\_features]}
+\CommentTok{                    返回值: 转换后的指定维度的array}
+\CommentTok{    Returns:None}
+\CommentTok{    """}
+    \ImportTok{from}\NormalTok{ sklearn.decomposition }\ImportTok{import}\NormalTok{ PCA}
+\NormalTok{    p }\OperatorTok{=}\NormalTok{ PCA(n\_components}\OperatorTok{=}\FloatTok{0.9}\NormalTok{)}
+\NormalTok{    a }\OperatorTok{=}\NormalTok{ [[}\DecValTok{2}\NormalTok{, }\DecValTok{8}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{],}
+\NormalTok{         [}\DecValTok{6}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{8}\NormalTok{],}
+\NormalTok{         [}\DecValTok{5}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{9}\NormalTok{, }\DecValTok{1}\NormalTok{]]}
+\NormalTok{    data }\OperatorTok{=}\NormalTok{ p.fit\_transform(a)}
+    \BuiltInTok{print}\NormalTok{(data)}
+\end{Highlighting}
+\end{Shaded}
+
+（2）线性判别分析法（LDA）
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ sklearn.lda }\ImportTok{import}\NormalTok{ LDA}
+\end{Highlighting}
+\end{Shaded}
+
+（3）奇异值分解（SVD）------文本降维
+
+在对文本数据进行向量化以后，由于是稀疏矩阵太稀疏，同样可以使用降维技术，这里使用的是奇异值分解。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ sklearn.decomposition }\ImportTok{import}\NormalTok{ TruncatedSVD}
+\end{Highlighting}
+\end{Shaded}
+
+注：降维技术不是特征选择，降维是把高维数据的特征映射到低维空间中，而特征选择是在高维空间中直接剔除部分特征，选出重要特征。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ a }\OperatorTok{=}\NormalTok{ [[}\DecValTok{2}\NormalTok{, }\DecValTok{8}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{],}
+\NormalTok{         [}\DecValTok{6}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{8}\NormalTok{],}
+\NormalTok{         [}\DecValTok{5}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{9}\NormalTok{, }\DecValTok{1}\NormalTok{]]}
+\NormalTok{    data }\OperatorTok{=}\NormalTok{ p.fit\_transform(a)}
+    \BuiltInTok{print}\NormalTok{(data)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{https://i-blog.csdnimg.cn/blog_migrate/df80dea51bb940174844dfdbf8a41d58.png}}
+
+\end{document}

@@ -9,7 +9,6 @@ int main()
     printf("%d\n",t);
     return 0;
 }
-*/
 
 /* 测试2
 int main()
