@@ -1,0 +1,15 @@
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Virtual environment / local env
+.venv/
+.env
+
+# OS files
+.DS_Store
+
+# Assignment report artifacts (do not upload)
+*.pdf
+实验报告.md
+image/实验报告/
