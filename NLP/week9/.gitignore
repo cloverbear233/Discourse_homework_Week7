@@ -1,0 +1,16 @@
+# Model/cache files (do not upload)
+.hf_cache/
+
+# Python caches
+__pycache__/
+*.pyc
+
+# Course report (requested not to upload)
+课程报告.md
+课程报告.pdf
+
+# Course report screenshots
+image/课程报告/
+
+# MacOS
+.DS_Store
