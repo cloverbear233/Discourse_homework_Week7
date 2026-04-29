@@ -28,23 +28,47 @@ LOCAL_MODEL_DIR = os.path.abspath(
 )
 
 
+_WEIGHT_FILES = {
+    "pytorch_model.bin",
+    "model.safetensors",
+    "tf_model.h5",
+    "tf_model.h5.index",
+    "model.ckpt.index",
+    "flax_model.msgpack",
+}
+
+
+def _local_model_has_weights(model_dir: str) -> bool:
+    """
+    transformers 从本地目录加载时，除了 config/tokenizer/vocab，
+    还需要真正的权重文件（pytorch_model.bin / model.safetensors 等）。
+    """
+    if not os.path.exists(os.path.join(model_dir, "config.json")):
+        return False
+
+    # 先快速检查一层目录
+    for name in _WEIGHT_FILES:
+        if os.path.exists(os.path.join(model_dir, name)):
+            return True
+
+    # 再递归查找（snapshot_download 可能把文件放在子目录）
+    for root, _, files in os.walk(model_dir):
+        for f in files:
+            if f in _WEIGHT_FILES:
+                return True
+    return False
+
+
 @st.cache_resource(show_spinner=False)
 def get_translator():
     os.makedirs(LOCAL_MODEL_DIR, exist_ok=True)
+    # 1) 如果本地目录已经有权重，直接加载，避免任何网络请求
+    if _local_model_has_weights(LOCAL_MODEL_DIR):
+        return pipeline("translation", model=LOCAL_MODEL_DIR, framework="pt")
 
-    # 先强制从 hf-mirror 拉取模型快照到本地目录，再从本地加载，
-    # 从而避免直连 huggingface.co（例如 config.json 的 HEAD 超时）。
+    # 2) 本地目录缺权重：尝试从 hf-mirror 下载补齐
     try:
-        # 如果之前已下载过，优先本地加载避免重复网络请求。
-        local_snapshot_dir = snapshot_download(
-            repo_id=MODEL_NAME,
-            endpoint=HF_MIRROR_ENDPOINT,
-            local_dir=LOCAL_MODEL_DIR,
-            local_dir_use_symlinks=False,
-            local_files_only=True,
-        )
-    except Exception:
-        local_snapshot_dir = snapshot_download(
+        snapshot_download(
             repo_id=MODEL_NAME,
             endpoint=HF_MIRROR_ENDPOINT,
             local_dir=LOCAL_MODEL_DIR,
@@ -52,8 +76,30 @@ def get_translator():
             resume_download=True,
             etag_timeout=20,
         )
-    # 显式指定框架为 PyTorch，进一步避免 TF Marian 组件被导入。
-    return pipeline("translation", model=local_snapshot_dir, framework="pt")
+    except Exception:
+        # 3) 作为兜底：尝试使用 transformers 默认缓存（~/.cache/huggingface）
+        #    只做本地加载（不再发起网络请求）。
+        try:
+            return pipeline(
+                "translation",
+                model=MODEL_NAME,
+                framework="pt",
+                model_kwargs={"local_files_only": True},
+            )
+        except Exception as exc:
+            raise RuntimeError(
+                "模型权重缺失，且无法从 hf-mirror 下载到本地。"
+                "请确认 hf-mirror 网络可用，或将模型权重预先下载到本地缓存。"
+            ) from exc
+
+    # 下载后仍未发现权重文件，说明 mirror 仍未成功下载到完整权重
+    if not _local_model_has_weights(LOCAL_MODEL_DIR):
+        raise RuntimeError(
+            "模型权重仍未在本地目录找到（仅检测到 config/tokenizer/vocab 等小文件）。"
+            "请确认网络可用并重试；必要时删除本目录后重新下载。"
+        )
+
+    return pipeline("translation", model=LOCAL_MODEL_DIR, framework="pt")
 
 
 @st.cache_data(show_spinner=False)
